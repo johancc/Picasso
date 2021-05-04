@@ -8,7 +8,7 @@ Picasso addresses the image colorization problem in the context of video restora
 
 Picasso will leverage [Instance-Aware Image Colorization (Su, et al)](papers/InstColorization.pdf) and [Temporal Denoising Mark Sythesis](papers/TDMS.pdf) to time-cohorent colorized videos. 
 
-To fuse both of the networks, we will split video inference into two phases - colorization and video creation. Since the TDMS network is model-agnostic, we can feed in series of frames to TDMS to create the final output. To ensure time-coherence, TDMS uses a FlowNet to take into mitigate flickering video through optimal flow.
+To fuse both of the networks, we will split video inference into two phases - colorization and video creation. Since the TDMS network is model-agnostic, we can feed in series of frames to TDMS to create the final output. To ensure time-coherence, TDMS uses a FlowNet to take into mitigate flickering video through optimal flow. Since TDMS uses a two frame window to create a consistent frame, we will have to ensure that the colorization finishes before the video creation step, or at least that there is a two frame buffer.
 
 ## Dataset 
 
