@@ -82,13 +82,13 @@ if __name__ == '__main__':
             'tof_x4_vimeo90k_official-32c9e01f.pth': '1TgQiXXsvkTBFrQ1D0eKPgL10tQGu0gKb'
         },
         'DFDNet': {
-            'DFDNet_dict_512-f79685f0.pth': '1iH00oMsoN_1OJaEQw3zP7_wqiAYMnY79',
-            'DFDNet_official-d1fa5650.pth': '1u6Sgcp8gVoy4uVTrOJKD3y9RuqH2JBAe'
+            'DFDNet_dict_512-f79685f0.pth': '1--yue0e1JovOrpgrE1DOW_YBPekmThhr', #'1iH00oMsoN_1OJaEQw3zP7_wqiAYMnY79',
+            'DFDNet_official-d1fa5650.pth': '1-2WiBYhj1dv5Grbm8FDHwfLbAxmTpS1G', #'1u6Sgcp8gVoy4uVTrOJKD3y9RuqH2JBAe'
         },
         'dlib': {
-            'mmod_human_face_detector-4cb19393.dat': '1FUM-hcoxNzFCOpCWbAUStBBMiU4uIGIL',
-            'shape_predictor_5_face_landmarks-c4b1e980.dat': '1PNPSmFjmbuuUDd5Mg5LDxyk7tu7TQv2F',
-            'shape_predictor_68_face_landmarks-fbdc2cb8.dat': '1IneH-O-gNkG0SQpNCplwxtOAtRCkG2ni'
+            'mmod_human_face_detector-4cb19393.dat': '1-S6qR4S5b6C9PLdIFJcMClgbs3nWXuXJ', #'1FUM-hcoxNzFCOpCWbAUStBBMiU4uIGIL',
+            'shape_predictor_5_face_landmarks-c4b1e980.dat': '1-Reg6ExsEkpVty9Xw3kHuoag6Uvry2S0', #'1PNPSmFjmbuuUDd5Mg5LDxyk7tu7TQv2F',
+            'shape_predictor_68_face_landmarks-fbdc2cb8.dat': '1-CaVz-7P-Gy45f-0wWrSo4TUZucMRSiB', #'1IneH-O-gNkG0SQpNCplwxtOAtRCkG2ni'
         }
     }
 

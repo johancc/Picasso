@@ -2,6 +2,8 @@ import argparse
 import glob
 import numpy as np
 import os
+import tqdm
+import shutil
 import torch
 import torchvision.transforms as transforms
 from skimage import io
@@ -48,6 +50,10 @@ def get_part_location(landmarks):
 
     return loc_left_eye, loc_right_eye, loc_nose, loc_mouth
 
+def move_to_output_folder(img_path, save_final_root):
+    # Still save the frame on the output folder for consistency
+    shutil.copy(img_path, save_final_root)
+    print('Saved to {}'.format(save_final_root))
 
 if __name__ == '__main__':
     """
@@ -120,8 +126,9 @@ if __name__ == '__main__':
 
     face_helper = FaceRestorationHelper(args.upscale_factor, face_size=512)
 
+    skipped = []
     # scan all the jpg and png images
-    for img_path in sorted(glob.glob(os.path.join(args.test_path, '*.[jp][pn]g'))):
+    for img_path in tqdm.tqdm(sorted(glob.glob(os.path.join(args.test_path, '*.[jp][pn]g')))):
         img_name = os.path.basename(img_path)
         print(f'Processing {img_name} image ...')
         save_crop_path = os.path.join(save_crop_root, img_name)
@@ -132,11 +139,20 @@ if __name__ == '__main__':
 
         face_helper.init_dlib(args.detection_path, args.landmark5_path, args.landmark68_path)
         # detect faces
-        num_det_faces = face_helper.detect_faces(
-            img_path, upsample_num_times=args.upsample_num_times, only_keep_largest=args.only_keep_largest)
-        # get 5 face landmarks for each face
-        num_landmarks = face_helper.get_face_landmarks_5()
-        print(f'\tDetect {num_det_faces} faces, {num_landmarks} landmarks.')
+        try:
+            num_det_faces = face_helper.detect_faces(
+                img_path, upsample_num_times=args.upsample_num_times, only_keep_largest=args.only_keep_largest)
+            # get 5 face landmarks for each face
+            num_landmarks = face_helper.get_face_landmarks_5()
+            print(f'\tDetect {num_det_faces} faces, {num_landmarks} landmarks.')
+        except:
+            print("{} had no faces. Skipping enhancement.".format(img_path))
+            skipped.append(img_path)
+
+            # clean all the intermediate results to process the next image
+            face_helper.free_dlib_gpu_memory()
+            face_helper.clean_all()
+            continue
         # warp and crop each face
         face_helper.warp_crop_faces(save_crop_path, save_inverse_affine_path)
 
@@ -190,4 +206,6 @@ if __name__ == '__main__':
         # clean all the intermediate results to process the next image
         face_helper.clean_all()
 
+    for img_path in skipped:
+        move_to_output_folder(img_path, save_final_root)
     print(f'\nAll results are saved in {result_root}')
